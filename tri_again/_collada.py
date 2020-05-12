@@ -15,7 +15,7 @@ from ._scene_internal import (
 )
 
 
-def create_material(dae, name, color=(1, 1, 1)):
+def create_material(collada, name, color=(1, 1, 1)):
     effect = Effect(
         f"{name}_effect",
         [],
@@ -25,8 +25,8 @@ def create_material(dae, name, color=(1, 1, 1)):
         double_sided=True,
     )
     material = Material(name, name, effect)
-    dae.effects.append(effect)
-    dae.materials.append(material)
+    collada.effects.append(effect)
+    collada.materials.append(material)
     return MaterialNode(name, material, inputs=[])
 
 
