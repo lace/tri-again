@@ -4,7 +4,11 @@ from collada.material import Effect, Material
 from collada.scene import GeometryNode, MaterialNode, Node, Scene
 from collada.source import FloatSource, InputList
 import numpy as np
-from ._internal import Mesh as InternalMesh
+from ._internal import (
+    Line as InternalLine,
+    Mesh as InternalMesh,
+    Point as InternalPoint,
+)
 
 
 def create_material(dae, name, color=(1, 1, 1)):
@@ -16,7 +20,7 @@ def create_material(dae, name, color=(1, 1, 1)):
         specular=(0, 0, 0),
         double_sided=True,
     )
-    material = Material(f"{name}_material", name, effect)
+    material = Material(name, name, effect)
     dae.effects.append(effect)
     dae.materials.append(material)
     return MaterialNode(name, material, inputs=[])
@@ -24,14 +28,62 @@ def create_material(dae, name, color=(1, 1, 1)):
 
 def geometry_from_mesh(collada, mesh, material_id="tri_material", name=None):
     vertex_source_name = f"{name}_verts"
-    vertex_source = FloatSource(vertex_source_name, mesh.v, ("X", "Y", "Z"))
-    geometry = Geometry(collada, name or "geometry0", str(mesh), [vertex_source])
+    geometry = Geometry(
+        collada,
+        name or "geometry0",
+        str(mesh),
+        [FloatSource(vertex_source_name, mesh.v, ("X", "Y", "Z"))],
+    )
     input_list = InputList()
     input_list.addInput(0, "VERTEX", f"#{vertex_source_name}")
     triset = geometry.createTriangleSet(mesh.f.ravel(), input_list, material_id)
     geometry.primitives.append(triset)
     collada.geometries.append(geometry)
     return geometry
+
+
+def geometry_from_segments(
+    collada, vertices, edges, description, material_id="polyline_material", name=None
+):
+    vertex_source_name = f"{name}_verts"
+    vertex_source = FloatSource(vertex_source_name, vertices, ("X", "Y", "Z"))
+    geometry = Geometry(collada, name, description, [vertex_source])
+    input_list = InputList()
+    input_list.addInput(0, "VERTEX", f"#{vertex_source_name}")
+    lineset = geometry.createLineSet(edges.ravel(), input_list, material_id)
+    geometry.primitives.append(lineset)
+    collada.geometries.append(geometry)
+    return geometry
+
+
+def geometry_from_polyline(
+    collada, polyline, material_id="polyline_material", name=None
+):
+    return geometry_from_segments(
+        collada=collada,
+        vertices=polyline.v,
+        edges=polyline.e,
+        description=str(polyline),
+        material_id=material_id,
+        name=name,
+    )
+
+
+def geometry_from_points(
+    collada, points, radius, material_id="point_material", name=None
+):
+    offset = radius * np.eye(3)
+    segments = np.repeat(points, 6, axis=0).reshape(-1, 3, 2, 3)
+    segments[:, :, 0] = segments[:, :, 0] + offset
+    segments[:, :, 1] = segments[:, :, 1] - offset
+    return geometry_from_segments(
+        collada=collada,
+        vertices=segments.reshape(-1, 2, 3),
+        edges=np.arange(2 * len(segments)).reshape(-1, 2),
+        description=f"{len(points)} points",
+        material_id=material_id,
+        name=name,
+    )
 
 
 def _geometry_from_mesh(dae, mesh):
@@ -66,47 +118,76 @@ def _geometry_from_mesh(dae, mesh):
     return geometry, extra_materials
 
 
+# def add_landmark_points(mesh, coords, radius=DEFAULT_RADIUS):
+
+
 def scene_to_collada(scene, name="triagain"):
     """
     Supports per-vertex color, but nothing else.
     """
     collada = Collada()
 
-    nodes = [
-        Node(
-            "root",
-            children=[
-                GeometryNode(
-                    geometry_from_mesh(collada, child.mesh, name=f"geometry_{i}"),
-                    [create_material(collada, name="tri")] if i == 0 else [],
-                )
-                for i, child in enumerate(scene.children)
-                if isinstance(child, InternalMesh)
-            ],
-        )
-    ]
-    import pdb
-
-    pdb.set_trace()
-
-    scene = Scene(name, nodes)
-    # [
-    #     Node(
-    #         "node0",
-    #         children=[
-    #             GeometryNode(
-    #                 geometry,
-    #                 [
-    #                     create_material(collada, name="tri_material"),
-    #                     create_material(
-    #                         collada, name="line_material", color=(1, 0, 0)
-    #                     ),
-    #                 ]
-    #                 + extra_materials,
-    #             )
-    #         ],
-    #     )
-    # ],
+    scene = Scene(
+        name,
+        [
+            Node(
+                "root",
+                children=[
+                    GeometryNode(
+                        geometry_from_mesh(
+                            collada,
+                            child.mesh,
+                            name=f"mesh_geometry_{i}",
+                            material_id="tri_material",
+                        ),
+                        [create_material(collada, name="tri_material")]
+                        if i == 0
+                        else [],
+                    )
+                    for i, child in enumerate(scene.children)
+                    if isinstance(child, InternalMesh)
+                ]
+                + [
+                    GeometryNode(
+                        geometry_from_polyline(
+                            collada,
+                            child.polyline,
+                            name=f"polyline_geometry_{i}",
+                            material_id="polyline_material",
+                        ),
+                        [
+                            create_material(
+                                collada, name="polyline_material", color=(1, 0, 0)
+                            )
+                        ],
+                    )
+                    for i, child in enumerate(scene.children)
+                    if isinstance(child, InternalLine)
+                ]
+                + [
+                    GeometryNode(
+                        geometry_from_points(
+                            collada,
+                            points=np.array(
+                                [
+                                    child.point
+                                    for i, child in enumerate(scene.children)
+                                    if isinstance(child, InternalPoint)
+                                ]
+                            ),
+                            name=f"polyline_geometry_0",
+                            material_id="point_material",
+                        ),
+                        [
+                            create_material(
+                                collada, name="point_material", color=(1, 0, 0)
+                            )
+                        ],
+                    )
+                ],
+            )
+        ],
+    )
     collada.scenes.append(scene)
     collada.scene = scene
     return collada
