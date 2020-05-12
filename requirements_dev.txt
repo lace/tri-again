@@ -9,6 +9,7 @@ click >=7.0,<8.0
 pytest ==5.3.5
 pytest-cov == 2.8.1
 lxml==4.5.0 
+lacecore==0.3.0
 
 # Lint and formatting.
 black ==19.10b0
