@@ -1,5 +1,5 @@
 # Changelog
 
-# 1.0.0b0
+## 0.1.0
 
 Initial release.

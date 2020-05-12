@@ -2,7 +2,7 @@
 
 ```eval_rst
 
-.. automodule:: tri-again
+.. automodule:: tri_again
     :members:
 ```
 
