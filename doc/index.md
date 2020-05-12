@@ -1,8 +1,8 @@
-# meshlab-pickedpoints
+# tri-again
 
 ```eval_rst
 
-.. automodule:: meshlab_pickedpoints
+.. automodule:: tri-again
     :members:
 ```
 

@@ -5,7 +5,7 @@ from setuptools import find_packages, setup
 # and vg are being installed concurrently.
 # https://packaging.python.org/guides/single-sourcing-package-version/
 version_info = {}
-exec(open("meshlab_pickedpoints/package_version.py").read(), version_info)
+exec(open("tri_again/package_version.py").read(), version_info)
 
 with open("README.md") as f:
     readme = f.read()
@@ -28,17 +28,17 @@ class build_py(setuptools.command.build_py.build_py):
 
 
 setup(
-    name="meshlab-pickedpoints",
+    name="tri-again",
     version=version_info["__version__"],
-    description="Read and write MeshLab picked point (.pp) files",
+    description="Simple scenegraph for quickly debugging 3D meshes, polylines, and points",
     long_description=readme,
     long_description_content_type="text/markdown",
-    author="Metabolize, Minnow Software, Body Labs, and other contributors",
+    author="Metabolize, Minnow Software, and other contributors",
     author_email="github@paulmelnikow.com",
-    url="https://github.com/lace/meshlab-pickedpoints",
+    url="https://github.com/lace/tri-again",
     project_urls={
-        "Issue Tracker": "https://github.com/lace/meshlab-pickedpoints/issues",
-        "Documentation": "https://meshlab-pickedpoints.readthedocs.io/en/stable/",
+        "Issue Tracker": "https://github.com/lace/tri-again/issues",
+        "Documentation": "https://tri-again.readthedocs.io/en/stable/",
     },
     packages=find_packages(),
     install_requires=install_requires,

@@ -35,9 +35,29 @@ jobs:
             . venv/bin/activate
             ./dev.py doc
 
+  lint:
+    docker:
+      - image: circleci/python:3
+
+    steps:
+      - checkout
+
+      - run:
+          name: Install python dependencies
+          command: |
+            mkdir -p venv
+            virtualenv venv
+            . venv/bin/activate
+            set -o pipefail; pip install --upgrade -r requirements_dev.txt | cat
+
+      - run:
+          name: Show versions
+          command: |
+            . venv/bin/activate
+            pip freeze
+
       - run:
           name: Check lint
-          when: always
           command: |
             . venv/bin/activate
             ./dev.py lint
@@ -65,7 +85,6 @@ jobs:
 
       - run:
           name: Check code format
-          when: always
           command: |
             . venv/bin/activate
             ./dev.py black-check
@@ -76,6 +95,7 @@ workflows:
   on-commit:
     jobs:
       - main
+      - lint
       - format
 
   daily:
@@ -87,4 +107,5 @@ workflows:
               only: master
     jobs:
       - main
+      - lint
       - format

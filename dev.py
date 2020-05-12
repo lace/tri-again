@@ -35,7 +35,7 @@ def test():
 
 @cli.command()
 def coverage():
-    execute("pytest --cov=meshlab_pickedpoints")
+    execute("pytest --cov=tri_again")
 
 
 @cli.command()

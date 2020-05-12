@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.abspath(".."))
 
 # -- Project information -----------------------------------------------------
 
-project = "meshlab-pickedpoints"
+project = "tri-again"
 copyright = "2020, Metabolize"
 author = "Metabolize"
 
@@ -107,7 +107,7 @@ html_static_path = ["_static"]
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "meshlab_pickedpointsdoc"
+htmlhelp_basename = "tri_againdoc"
 
 
 # -- Extension configuration -------------------------------------------------
@@ -124,7 +124,7 @@ autosummary_generate = True
 # https://github.com/sphinx-contrib/apidoc
 # https://github.com/rtfd/readthedocs.org/issues/1139
 doc_home = os.path.abspath(os.path.dirname(__file__))
-apidoc_module_dir = os.path.join(doc_home, "..", "meshlab_pickedpoints")
+apidoc_module_dir = os.path.join(doc_home, "..", "tri_again")
 apidoc_excluded_paths = ["test_*", "package_version.py", "**/test_*"]
 apidoc_separate_modules = True
 apidoc_toc_file = False
