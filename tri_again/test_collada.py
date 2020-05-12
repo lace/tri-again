@@ -21,5 +21,11 @@ def test_example():
             ),
         )
         .add_points(np.zeros(3), np.array([5.0, 0.0, 0.0]))
+        .add_points(
+            np.array([0.0, 0.0, 0.3]), np.array([5.0, 0.0, 0.1]), color="yellow"
+        )
+        .add_points(
+            np.array([0.0, 0.0, 0.6]), np.array([5.0, 0.0, 0.2]), color="darkgreen"
+        )
     )
     scene.write("example.dae")

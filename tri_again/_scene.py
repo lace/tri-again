@@ -1,4 +1,4 @@
-from ._internal import Line, Mesh, Point
+from ._scene_internal import Line, Mesh, Point
 
 
 class Scene:
@@ -11,12 +11,12 @@ class Scene:
             self.children.append(Mesh(mesh=mesh))
         return self
 
-    def add_lines(self, *polylines, color=None):
+    def add_lines(self, *polylines, color="red"):
         for polyline in polylines:
             self.children.append(Line(polyline=polyline, color=color))
         return self
 
-    def add_points(self, *points, name=None, color=None):
+    def add_points(self, *points, name=None, color="red"):
         if len(points) > 0 and name is not None:
             raise ValueError(
                 "When more than one point is provided, expected `name` to be None"

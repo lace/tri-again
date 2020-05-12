@@ -3,12 +3,16 @@ from collada.geometry import Geometry
 from collada.material import Effect, Material
 from collada.scene import GeometryNode, MaterialNode, Node, Scene
 from collada.source import FloatSource, InputList
+from polliwog import Polyline
 import numpy as np
-from ._internal import (
+from toolz import groupby
+import vg
+from ._scene_internal import (
     Line as InternalLine,
     Mesh as InternalMesh,
     Point as InternalPoint,
 )
+from ._color import normalize_color
 
 
 def create_material(dae, name, color=(1, 1, 1)):
@@ -45,6 +49,9 @@ def geometry_from_mesh(collada, mesh, material_id="tri_material", name=None):
 def geometry_from_segments(
     collada, vertices, edges, description, material_id="polyline_material", name=None
 ):
+    vg.shape.check(locals(), "vertices", (-1, 3))
+    vg.shape.check(locals(), "edges", (-1, 2))
+
     vertex_source_name = f"{name}_verts"
     vertex_source = FloatSource(vertex_source_name, vertices, ("X", "Y", "Z"))
     geometry = Geometry(collada, name, description, [vertex_source])
@@ -59,6 +66,8 @@ def geometry_from_segments(
 def geometry_from_polyline(
     collada, polyline, material_id="polyline_material", name=None
 ):
+    if not isinstance(polyline, Polyline):
+        raise ValueError("Expected a Polyline")
     return geometry_from_segments(
         collada=collada,
         vertices=polyline.v,
@@ -72,6 +81,8 @@ def geometry_from_polyline(
 def geometry_from_points(
     collada, points, radius, material_id="point_material", name=None
 ):
+    vg.shape.check(locals(), "points", (-1, 3))
+
     offset = radius * np.eye(3)
     segments = np.repeat(points, 6, axis=0).reshape(-1, 3, 2, 3)
     segments[:, :, 0] = segments[:, :, 0] + offset
@@ -88,41 +99,6 @@ def geometry_from_points(
         material_id=material_id,
         name=name,
     )
-
-
-def _geometry_from_mesh(dae, mesh):
-
-    extra_materials = []
-    # e
-    if mesh.e is not None:
-        if e_color is None:
-            indices = np.dstack([mesh.e for _ in srcs]).ravel()
-            lineset = geometry.createLineSet(indices, input_list, "line_material")
-            geometry.primitives.append(lineset)
-        else:
-            edges_rendered = np.zeros(len(mesh.e), dtype=np.bool)
-            for i, this_e_color in enumerate(e_color):
-                these_edge_indices = this_e_color["e_indices"]
-                this_color = this_e_color["color"]
-                material_name = "line_material_{}".format(i)
-                indices = np.dstack([mesh.e[these_edge_indices] for _ in srcs]).ravel()
-                extra_materials.append(
-                    create_material(dae, name=material_name, color=this_color)
-                )
-                lineset = geometry.createLineSet(indices, input_list, material_name)
-                geometry.primitives.append(lineset)
-                edges_rendered[these_edge_indices] = True
-            edges_remaining = (~edges_rendered).nonzero()
-            if len(edges_remaining):
-                indices = np.dstack([mesh.e[edges_remaining] for _ in srcs]).ravel()
-                lineset = geometry.createLineSet(indices, input_list, "line_material")
-                geometry.primitives.append(lineset)
-
-    dae.geometries.append(geometry)
-    return geometry, extra_materials
-
-
-# def add_landmark_points(mesh, coords, radius=DEFAULT_RADIUS):
 
 
 def scene_to_collada(scene, name="triagain"):
@@ -172,22 +148,28 @@ def scene_to_collada(scene, name="triagain"):
                     GeometryNode(
                         geometry_from_points(
                             collada,
-                            points=np.array(
-                                [
-                                    child.point
-                                    for i, child in enumerate(scene.children)
-                                    if isinstance(child, InternalPoint)
-                                ]
-                            ),
+                            points=np.array([point.point for point in points]),
                             radius=scene.point_radius,
-                            name=f"polyline_geometry_0",
-                            material_id="point_material",
+                            name=f"point_geometry_{i}",
+                            material_id=f"point_material_{i}",
                         ),
                         [
                             create_material(
-                                collada, name="point_material", color=(1, 0, 0)
+                                collada,
+                                name=f"point_material_{i}",
+                                color=normalize_color(color),
                             )
                         ],
+                    )
+                    for i, (color, points) in enumerate(
+                        groupby(
+                            lambda point: point.color,
+                            [
+                                child
+                                for child in scene.children
+                                if isinstance(child, InternalPoint)
+                            ],
+                        ).items()
                     )
                 ],
             )

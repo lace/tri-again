@@ -1,3 +1,6 @@
+from ._color import normalize_color
+
+
 class Object:
     pass
 
@@ -9,13 +12,19 @@ class Mesh(Object):
 
 
 class Line(Object):
-    def __init__(self, polyline, color=None):
+    def __init__(self, polyline, color):
+        # Validate.
+        normalize_color(color)
+
         self.polyline = polyline
         self.color = color
 
 
 class Point(Object):
-    def __init__(self, point, name=None, color=None):
+    def __init__(self, point, color, name=None):
+        # Validate.
+        normalize_color(color)
+
         self.point = point
         self.name = name
         self.color = color
