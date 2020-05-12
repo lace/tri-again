@@ -2,14 +2,9 @@
 
 ```eval_rst
 
-.. automodule:: tri_again
+.. py:currentmodule:: tri_again
+
+.. autoclass:: Scene
     :members:
-```
 
-# Indices and tables
-
-```eval_rst
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
 ```
