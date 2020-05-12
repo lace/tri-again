@@ -3,16 +3,16 @@ from collada.geometry import Geometry
 from collada.material import Effect, Material
 from collada.scene import GeometryNode, MaterialNode, Node, Scene
 from collada.source import FloatSource, InputList
-from polliwog import Polyline
 import numpy as np
+from polliwog import Polyline
 from toolz import groupby
 import vg
+from ._color import normalize_color
 from ._scene_internal import (
     Line as InternalLine,
     Mesh as InternalMesh,
     Point as InternalPoint,
 )
-from ._color import normalize_color
 
 
 def create_material(dae, name, color=(1, 1, 1)):
