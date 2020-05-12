@@ -106,9 +106,6 @@ def geometry_node_from_points(collada, points, radius, color, name):
 
 
 def collada_from_scene(scene, name="triagain"):
-    """
-    Supports per-vertex color, but nothing else.
-    """
     collada = Collada()
 
     geometry_nodes = (
