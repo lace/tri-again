@@ -1,6 +1,7 @@
 from lacecore import shapes
 import numpy as np
 from polliwog import Polyline
+import pytest
 from . import Scene
 
 
@@ -29,3 +30,17 @@ def test_example():
         )
     )
     scene.write("example.dae")
+
+
+def test_error():
+    with pytest.raises(ValueError, match="Expected a Polyline"):
+        Scene().add_lines("not-a-polyline").write("other.dae")
+
+    with pytest.raises(ValueError, match="Expected filename to end with .dae"):
+        Scene().write("other.usdz")
+
+    with pytest.raises(
+        ValueError,
+        match="When more than one point is provided, expected `name` to be None",
+    ):
+        Scene().add_points(np.arange(9).reshape(-1, 3), name="foobar")
