@@ -9,6 +9,7 @@ class Scene:
         point_radius (float): The desired radius of the markers that are
             rendered for points. The default is `1.0`.
     """
+
     def __init__(self, point_radius=1.0):
         self.point_radius = point_radius
         self.children = []
