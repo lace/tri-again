@@ -26,7 +26,12 @@ class Scene:
         return self
 
     def write(self, filename):
-        from ._collada import scene_to_collada
+        import os
+        from ._collada import collada_from_scene
 
-        dae = scene_to_collada(self)
+        _, extension = os.path.splitext(filename)
+        if extension != ".dae":
+            raise ValueError("Expected filename to end with .dae")
+
+        dae = collada_from_scene(self)
         dae.write(filename)

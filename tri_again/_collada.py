@@ -30,7 +30,7 @@ def create_material(dae, name, color=(1, 1, 1)):
     return MaterialNode(name, material, inputs=[])
 
 
-def geometry_from_mesh(collada, mesh, material_id="tri_material", name=None):
+def geometry_node_from_mesh(collada, mesh, name):
     vertex_source_name = f"{name}_verts"
     geometry = Geometry(
         collada,
@@ -40,15 +40,17 @@ def geometry_from_mesh(collada, mesh, material_id="tri_material", name=None):
     )
     input_list = InputList()
     input_list.addInput(0, "VERTEX", f"#{vertex_source_name}")
-    triset = geometry.createTriangleSet(mesh.f.ravel(), input_list, material_id)
+
+    material_name = f"{name}_material"
+    triset = geometry.createTriangleSet(mesh.f.ravel(), input_list, material_name)
+
     geometry.primitives.append(triset)
     collada.geometries.append(geometry)
-    return geometry
+
+    return GeometryNode(geometry, [create_material(collada, name=material_name)])
 
 
-def geometry_from_segments(
-    collada, vertices, edges, description, material_id="polyline_material", name=None
-):
+def geometry_node_from_segments(collada, vertices, edges, color, name, description):
     vg.shape.check(locals(), "vertices", (-1, 3))
     vg.shape.check(locals(), "edges", (-1, 2))
 
@@ -57,30 +59,32 @@ def geometry_from_segments(
     geometry = Geometry(collada, name, description, [vertex_source])
     input_list = InputList()
     input_list.addInput(0, "VERTEX", f"#{vertex_source_name}")
-    lineset = geometry.createLineSet(edges.ravel(), input_list, material_id)
+
+    material_name = f"{name}_material"
+    lineset = geometry.createLineSet(edges.ravel(), input_list, material_name)
+
     geometry.primitives.append(lineset)
     collada.geometries.append(geometry)
-    return geometry
 
-
-def geometry_from_polyline(
-    collada, polyline, material_id="polyline_material", name=None
-):
-    if not isinstance(polyline, Polyline):
-        raise ValueError("Expected a Polyline")
-    return geometry_from_segments(
-        collada=collada,
-        vertices=polyline.v,
-        edges=polyline.e,
-        description=str(polyline),
-        material_id=material_id,
-        name=name,
+    return GeometryNode(
+        geometry, [create_material(collada, name=material_name, color=color)]
     )
 
 
-def geometry_from_points(
-    collada, points, radius, material_id="point_material", name=None
-):
+def geometry_node_from_polyline(collada, polyline, color, name):
+    if not isinstance(polyline, Polyline):
+        raise ValueError("Expected a Polyline")
+    return geometry_node_from_segments(
+        collada=collada,
+        vertices=polyline.v,
+        edges=polyline.e,
+        color=color,
+        name=name,
+        description=str(polyline),
+    )
+
+
+def geometry_node_from_points(collada, points, radius, color, name):
     vg.shape.check(locals(), "points", (-1, 3))
 
     offset = radius * np.eye(3)
@@ -91,90 +95,64 @@ def geometry_from_points(
     vertices = segments.reshape(-1, 3)
     edges = np.arange(len(vertices)).reshape(-1, 2)
 
-    return geometry_from_segments(
+    return geometry_node_from_segments(
         collada=collada,
         vertices=vertices,
         edges=edges,
-        description=f"{len(points)} points",
-        material_id=material_id,
+        color=color,
         name=name,
+        description=f"{len(points)} points",
     )
 
 
-def scene_to_collada(scene, name="triagain"):
+def collada_from_scene(scene, name="triagain"):
     """
     Supports per-vertex color, but nothing else.
     """
     collada = Collada()
 
-    scene = Scene(
-        name,
+    geometry_nodes = (
         [
-            Node(
-                "root",
-                children=[
-                    GeometryNode(
-                        geometry_from_mesh(
-                            collada,
-                            child.mesh,
-                            name=f"mesh_geometry_{i}",
-                            material_id="tri_material",
-                        ),
-                        [create_material(collada, name="tri_material")]
-                        if i == 0
-                        else [],
-                    )
-                    for i, child in enumerate(scene.children)
-                    if isinstance(child, InternalMesh)
-                ]
-                + [
-                    GeometryNode(
-                        geometry_from_polyline(
-                            collada,
-                            child.polyline,
-                            name=f"polyline_geometry_{i}",
-                            material_id="polyline_material",
-                        ),
-                        [
-                            create_material(
-                                collada, name="polyline_material", color=(1, 0, 0)
-                            )
-                        ],
-                    )
-                    for i, child in enumerate(scene.children)
-                    if isinstance(child, InternalLine)
-                ]
-                + [
-                    GeometryNode(
-                        geometry_from_points(
-                            collada,
-                            points=np.array([point.point for point in points]),
-                            radius=scene.point_radius,
-                            name=f"point_geometry_{i}",
-                            material_id=f"point_material_{i}",
-                        ),
-                        [
-                            create_material(
-                                collada,
-                                name=f"point_material_{i}",
-                                color=normalize_color(color),
-                            )
-                        ],
-                    )
-                    for i, (color, points) in enumerate(
-                        groupby(
-                            lambda point: point.color,
-                            [
-                                child
-                                for child in scene.children
-                                if isinstance(child, InternalPoint)
-                            ],
-                        ).items()
-                    )
-                ],
+            geometry_node_from_mesh(
+                collada=collada, mesh=child.mesh, name=f"mesh_geometry_{i}",
             )
-        ],
+            for i, child in enumerate(
+                child for child in scene.children if isinstance(child, InternalMesh)
+            )
+        ]
+        + [
+            geometry_node_from_polyline(
+                collada,
+                child.polyline,
+                name=f"polyline_geometry_{i}",
+                color=normalize_color(child.color),
+            )
+            for i, child in enumerate(
+                child for child in scene.children if isinstance(child, InternalLine)
+            )
+        ]
+        + [
+            geometry_node_from_points(
+                collada,
+                points=np.array([point.point for point in points]),
+                radius=scene.point_radius,
+                color=normalize_color(color),
+                name=f"point_geometry_{i}",
+            )
+            for i, (color, points) in enumerate(
+                groupby(
+                    lambda point: point.color,
+                    [
+                        child
+                        for child in scene.children
+                        if isinstance(child, InternalPoint)
+                    ],
+                ).items()
+            )
+        ]
     )
+
+    scene = Scene(name, [Node("root", children=geometry_nodes)])
     collada.scenes.append(scene)
     collada.scene = scene
     return collada
