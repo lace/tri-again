@@ -76,10 +76,14 @@ def geometry_from_points(
     segments = np.repeat(points, 6, axis=0).reshape(-1, 3, 2, 3)
     segments[:, :, 0] = segments[:, :, 0] + offset
     segments[:, :, 1] = segments[:, :, 1] - offset
+
+    vertices = segments.reshape(-1, 3)
+    edges = np.arange(len(vertices)).reshape(-1, 2)
+
     return geometry_from_segments(
         collada=collada,
-        vertices=segments.reshape(-1, 2, 3),
-        edges=np.arange(2 * len(segments)).reshape(-1, 2),
+        vertices=vertices,
+        edges=edges,
         description=f"{len(points)} points",
         material_id=material_id,
         name=name,
@@ -175,6 +179,7 @@ def scene_to_collada(scene, name="triagain"):
                                     if isinstance(child, InternalPoint)
                                 ]
                             ),
+                            radius=scene.point_radius,
                             name=f"polyline_geometry_0",
                             material_id="point_material",
                         ),

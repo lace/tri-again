@@ -2,19 +2,27 @@ from ._internal import Line, Mesh, Point
 
 
 class Scene:
-    def __init__(self):
+    def __init__(self, point_radius=1.0):
+        self.point_radius = point_radius
         self.children = []
 
-    def add_mesh(self, mesh):
-        self.children.append(Mesh(mesh=mesh))
+    def add_meshes(self, *meshes):
+        for mesh in meshes:
+            self.children.append(Mesh(mesh=mesh))
         return self
 
-    def add_line(self, polyline, color=None):
-        self.children.append(Line(polyline=polyline, color=color))
+    def add_lines(self, *polylines, color=None):
+        for polyline in polylines:
+            self.children.append(Line(polyline=polyline, color=color))
         return self
 
-    def add_point(self, point, name=None, color=None):
-        self.children.append(Point(point=point, name=name, color=color))
+    def add_points(self, *points, name=None, color=None):
+        if len(points) > 0 and name is not None:
+            raise ValueError(
+                "When more than one point is provided, expected `name` to be None"
+            )
+        for point in points:
+            self.children.append(Point(point, name=name, color=color))
         return self
 
     def write(self, filename):
