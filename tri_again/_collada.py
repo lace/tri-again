@@ -36,7 +36,7 @@ def geometry_node_from_mesh(collada, mesh, name):
         collada,
         name or "geometry0",
         str(mesh),
-        [FloatSource(vertex_source_name, mesh.v, ("X", "Y", "Z"))],
+        [FloatSource(vertex_source_name, mesh.v.ravel(), ("X", "Y", "Z"))],
     )
     input_list = InputList()
     input_list.addInput(0, "VERTEX", f"#{vertex_source_name}")
