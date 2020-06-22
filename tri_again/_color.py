@@ -9,4 +9,4 @@ def normalize_color(color):
             )
         return color
     else:
-        return name_to_rgb_percent(color)
+        return tuple(0.01 * float(x.strip('%')) for x in name_to_rgb_percent(color))
