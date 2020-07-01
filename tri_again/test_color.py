@@ -3,7 +3,7 @@ from ._color import normalize_color
 
 
 def test_normalize_color():
-    assert normalize_color("yellow") == ("100%", "100%", "0%")
+    assert normalize_color("yellow") == (1, 1, 0)
     assert normalize_color((1, 0, 1)) == (1, 0, 1)
 
     with pytest.raises(
