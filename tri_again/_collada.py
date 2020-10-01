@@ -111,7 +111,9 @@ def collada_from_scene(scene, name="triagain"):
     geometry_nodes = (
         [
             geometry_node_from_mesh(
-                collada=collada, mesh=child.mesh, name=f"mesh_geometry_{i}",
+                collada=collada,
+                mesh=child.mesh,
+                name=f"mesh_geometry_{i}",
             )
             for i, child in enumerate(
                 child for child in scene.children if isinstance(child, InternalMesh)
