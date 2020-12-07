@@ -41,7 +41,7 @@ setup(
         "Documentation": "https://tri-again.readthedocs.io/en/stable/",
     },
     packages=find_packages(),
-    python_requires=['>=3.6', '<3.9']
+    python_requires=[">=3.6", "<3.9"],
     install_requires=install_requires,
     cmdclass={"build_py": build_py},
     classifiers=[
