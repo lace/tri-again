@@ -2,6 +2,7 @@
 
 ## 0.1.4
 
+- Update lacecore dependency.
 - Note incompatibility with Python 3.9.
 
 
