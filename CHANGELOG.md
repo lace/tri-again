@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.4
+
+- Update lacecore dependency.
+- Note incompatibility with Python 3.9.
+
+
 ## 0.1.3
 
 - Widen toolz dependency specifier.
