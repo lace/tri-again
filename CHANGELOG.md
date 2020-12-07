@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.4
+
+- Note incompatibility with Python 3.9.
+
+
 ## 0.1.3
 
 - Widen toolz dependency specifier.
