@@ -44,7 +44,6 @@ pytest-cov = "2.12.1"
 Sphinx = "4.1.0"
 sphinxcontrib-apidoc = "0.3.0"
 
-
 [build-system]
 # Lint requires setuptools.
 requires = ["setuptools", "poetry-core>=1.0.0"]
