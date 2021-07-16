@@ -18,13 +18,15 @@ Simple scenegraph for quickly debugging 3D meshes, polylines, and points.
 
 ## Development
 
-First, [install Poetry][].
+First, install Python 3.7 or 3.8 ([3.9 is not supported][issue 25]) and
+[Poetry][].
 
 After cloning the repo, run `./bootstrap.zsh` to initialize a virtual
 environment with the project's dependencies.
 
 Subsequently, run `./dev.py install` to update the dependencies.
 
+[issue 25]: https://github.com/lace/tri-again/issues/25
 [install poetry]: https://python-poetry.org/docs/#installation
 
 
