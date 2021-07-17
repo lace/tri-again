@@ -6,7 +6,7 @@ from collada.source import FloatSource, InputList
 import numpy as np
 from polliwog import Polyline
 from toolz import groupby
-import vg
+from vg.compat import v1 as vg
 from ._color import normalize_color
 from ._scene_internal import (
     Line as InternalLine,

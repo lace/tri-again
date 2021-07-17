@@ -81,7 +81,7 @@ python-versions = "*"
 
 [[package]]
 name = "charset-normalizer"
-version = "2.0.1"
+version = "2.0.3"
 description = "The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet."
 category = "dev"
 optional = false
@@ -262,17 +262,17 @@ i18n = ["Babel (>=2.7)"]
 
 [[package]]
 name = "lacecore"
-version = "0.10.0"
-description = "Polygonal mesh library optimized for cloud computation."
+version = "0.11.0"
+description = "Polygonal meshes optimized for cloud computation"
 category = "dev"
 optional = false
-python-versions = "*"
+python-versions = ">=3.7,<4"
 
 [package.dependencies]
-numpy = "*"
+numpy = "<1.19.0"
 ounce = ">=1.1.0,<2.0"
-polliwog = "1.0.0b13"
-vg = ">=1.7.0,<2.0"
+polliwog = "1.0.0b14"
+vg = ">=1.11.1"
 
 [package.extras]
 obj = ["tinymetabobjloader (==2.0.0a0)"]
@@ -369,11 +369,11 @@ python-versions = ">=3.5"
 
 [[package]]
 name = "ounce"
-version = "1.1.0"
-description = "A simple Python package to manipulate units"
-category = "dev"
+version = "1.1.1"
+description = "Fast, simple, non-fancy, and non-magical package for manipulating units of measure"
+category = "main"
 optional = false
-python-versions = "*"
+python-versions = ">=3.7,<4"
 
 [[package]]
 name = "packaging"
@@ -418,16 +418,16 @@ dev = ["pre-commit", "tox"]
 
 [[package]]
 name = "polliwog"
-version = "1.0.0b13"
-description = "2D and 3D computational geometry library which scales from prototyping to production"
-category = "dev"
+version = "1.0.0b14"
+description = "2D and 3D computational geometry library"
+category = "main"
 optional = false
-python-versions = "*"
+python-versions = ">=3.7,<4"
 
 [package.dependencies]
 numpy = "<1.19.0"
 ounce = ">=1.1.0,<2.0"
-vg = ">=1.5.0"
+vg = ">=1.11.1"
 
 [[package]]
 name = "property-manager"
@@ -812,7 +812,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.7,<3.9"
-content-hash = "efe8ea9336695398803bdc54b86d1258a1a5338f8a8497b432f32a6f86a2cc72"
+content-hash = "3d9f0f82a57681e5366d0e42f3b715e469af9f4c4617b2baeb2b660b4a16d005"
 
 [metadata.files]
 alabaster = [
@@ -844,8 +844,8 @@ certifi = [
     {file = "certifi-2021.5.30.tar.gz", hash = "sha256:2bbf76fd432960138b3ef6dda3dde0544f27cbf8546c458e60baf371917ba9ee"},
 ]
 charset-normalizer = [
-    {file = "charset-normalizer-2.0.1.tar.gz", hash = "sha256:ad0da505736fc7e716a8da15bf19a985db21ac6415c26b34d2fafd3beb3d927e"},
-    {file = "charset_normalizer-2.0.1-py3-none-any.whl", hash = "sha256:b68b38179052975093d71c1b5361bf64afd80484697c1f27056e50593e695ceb"},
+    {file = "charset-normalizer-2.0.3.tar.gz", hash = "sha256:c46c3ace2d744cfbdebceaa3c19ae691f53ae621b39fd7570f59d14fb7f2fd12"},
+    {file = "charset_normalizer-2.0.3-py3-none-any.whl", hash = "sha256:88fce3fa5b1a84fdcb3f603d889f723d1dd89b26059d0123ca435570e848d5e1"},
 ]
 click = [
     {file = "click-8.0.1-py3-none-any.whl", hash = "sha256:fba402a4a47334742d782209a7c79bc448911afe1149d07bdabdf480b3e2f4b6"},
@@ -958,7 +958,8 @@ jinja2 = [
     {file = "Jinja2-3.0.1.tar.gz", hash = "sha256:703f484b47a6af502e743c9122595cc812b0271f661722403114f71a79d0f5a4"},
 ]
 lacecore = [
-    {file = "lacecore-0.10.0-py3-none-any.whl", hash = "sha256:9a81be26537fe82c0437d9153e3a50bb79ae64046b6a63232e87ef40bb3b8a57"},
+    {file = "lacecore-0.11.0-py3-none-any.whl", hash = "sha256:049a503ca347a801b0ace47e4cef9586c6f2c3f591b427ad02fcf712d50a39c0"},
+    {file = "lacecore-0.11.0.tar.gz", hash = "sha256:a743eee877cbd36c17cc388ca82afb5d84080754cca2230319952638ed3f9946"},
 ]
 markdown-it-py = [
     {file = "markdown-it-py-1.1.0.tar.gz", hash = "sha256:36be6bb3ad987bfdb839f5ba78ddf094552ca38ccbd784ae4f74a4e1419fc6e3"},
@@ -1040,8 +1041,8 @@ numpy = [
     {file = "numpy-1.18.5.zip", hash = "sha256:34e96e9dae65c4839bd80012023aadd6ee2ccb73ce7fdf3074c62f301e63120b"},
 ]
 ounce = [
-    {file = "ounce-1.1.0-py3-none-any.whl", hash = "sha256:2d1337079ce3987574d1d2e895928e44c25542b0db5b98829e1718e5d5e61922"},
-    {file = "ounce-1.1.0.tar.gz", hash = "sha256:e8f158e90392ea6e6c15127672f53edabe290f670deaf931bd9cd40379a37d75"},
+    {file = "ounce-1.1.1-py3-none-any.whl", hash = "sha256:5273cf7b609ed1b9fb814af6cc3000476262ccd327bd20c0e799f6ed5052f638"},
+    {file = "ounce-1.1.1.tar.gz", hash = "sha256:b0d71780666793942aeb7e929121dad1ef709c187ee398d505544d97f89bf4a8"},
 ]
 packaging = [
     {file = "packaging-21.0-py3-none-any.whl", hash = "sha256:c86254f9220d55e31cc94d69bade760f0847da8000def4dfe1c6b872fd14ff14"},
@@ -1060,8 +1061,8 @@ pluggy = [
     {file = "pluggy-0.13.1.tar.gz", hash = "sha256:15b2acde666561e1298d71b523007ed7364de07029219b604cf808bfa1c765b0"},
 ]
 polliwog = [
-    {file = "polliwog-1.0.0b13-py3-none-any.whl", hash = "sha256:a6d8dec48faa5604b5fea6cf6f472894927885f020a9dc9bca3ff463511ddce6"},
-    {file = "polliwog-1.0.0b13.tar.gz", hash = "sha256:3fdca920aad4abc2c2aed88df52c5b7ac19f91515ebb271f95a762044d3bc3d9"},
+    {file = "polliwog-1.0.0b14-py3-none-any.whl", hash = "sha256:eb575710d706c1ebe4dd3c6f577a48a3e99bd9600247880d48d7a3471ccaebb1"},
+    {file = "polliwog-1.0.0b14.tar.gz", hash = "sha256:10ce6b3a907cde1a45a39ff02852ba2bd85e5c35b2f4a00df63b73323bd5e8ee"},
 ]
 property-manager = [
     {file = "property-manager-3.0.tar.gz", hash = "sha256:93e76da9ae7af13cccc2cd1e3b47219950c56c125cd962aaed693894af267c54"},
