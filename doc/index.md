@@ -1,6 +1,6 @@
 # tri-again
 
-```eval_rst
+```{eval-rst}
 
 .. py:currentmodule:: tri_again
 
