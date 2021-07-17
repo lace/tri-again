@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.5
+
+- Declare missing polliwog dependency.
+- Update vg and lacecore dependencies.
+
+
 ## 0.1.4
 
 - Update lacecore dependency.

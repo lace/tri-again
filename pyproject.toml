@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tri-again"
-version = "0.1.4"
+version = "0.1.5"
 description = "Work with polygonal meshes which have vertex-wise correspondence"
 authors = ["Paul Melnikow <github@paulmelnikow.com>", "Metabolize"]
 license = "MIT"
