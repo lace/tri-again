@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "tri-again"
-version = "0.1.5"
-description = "Work with polygonal meshes which have vertex-wise correspondence"
+version = "1.0.0"
+description = "Scenegraph for quickly debugging 3D meshes, polylines, and points"
 authors = ["Paul Melnikow <github@paulmelnikow.com>", "Metabolize"]
 license = "MIT"
 include = ["CHANGELOG.md"]
