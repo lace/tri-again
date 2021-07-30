@@ -6,11 +6,11 @@ authors = ["Paul Melnikow <github@paulmelnikow.com>", "Metabolize"]
 license = "MIT"
 include = ["CHANGELOG.md"]
 exclude = ["**/test_*.py"]
-homepage = "https://github.com/lace/entente"
-repository = "https://github.com/lace/entente"
-documentation = "https://entente.readthedocs.io/en/stable/"
+homepage = "https://github.com/lace/tri-again"
+repository = "https://github.com/lace/tri-again"
+documentation = "https://tri-again.readthedocs.io/en/stable/"
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "Intended Audience :: Science/Research",
     "Intended Audience :: Manufacturing",
@@ -26,10 +26,10 @@ classifiers = [
 # https://github.com/lace/tri-again/issues/25
 python = ">=3.7,<3.9"
 numpy = "*"
-polliwog = "1.0.0b14"
+polliwog = ">=1.0.0,<2"
 pycollada = ">=0.7.1,<0.8"
 toolz = ">=0.10.0,<0.12.0"
-vg = ">=1.11.1"
+vg = ">=2.0.0"
 webcolors = ">=1.11.1,<2"
 
 [tool.poetry.dev-dependencies]
@@ -39,7 +39,7 @@ coverage = "5.5"
 executor = "23.2"
 flake8 = "3.9.2"
 flake8-import-order = "0.18.1"
-lacecore = "0.11.0"
+lacecore = "1.0.0"
 myst-parser = "0.15.1"
 pytest = "6.2.4"
 pytest-cov = "2.12.1"
