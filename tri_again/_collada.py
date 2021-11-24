@@ -76,7 +76,7 @@ def geometry_node_from_polyline(collada, polyline, color, name):
         raise ValueError("Expected a Polyline")
     return geometry_node_from_segments(
         collada=collada,
-        vertices=polyline.v,
+        vertices=np.ascontiguousarray(polyline.v),
         edges=polyline.e,
         color=color,
         name=name,
