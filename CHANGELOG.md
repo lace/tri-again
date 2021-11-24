@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.1
+
+- Support polylines with noncontiguous vertex arrays.
+
+
 ## 1.1.0
 
 - Update polliwog and vg dependencies.
