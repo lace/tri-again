@@ -25,6 +25,7 @@ classifiers = [
 # pycollada is not working in Python 3.9. See
 # https://github.com/lace/tri-again/issues/25
 python = ">=3.7,<3.9"
+lacecore = ">=2.3.0,<3"
 numpy = "*"
 polliwog = ">=2.0.0,<3"
 pycollada = ">=0.7.1,<0.8"
@@ -39,7 +40,6 @@ coverage = "5.5"
 executor = "23.2"
 flake8 = "3.9.2"
 flake8-import-order = "0.18.1"
-lacecore = "2.0.0"
 myst-parser = "0.15.1"
 pytest = "6.2.4"
 pytest-cov = "2.12.1"

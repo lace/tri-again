@@ -72,6 +72,17 @@ class Scene:
             self.children.append(Point(point, name=name, color=color))
         return self
 
+    def add_points_as_spheres(self, *points, radius=None, name=None, color="red"):
+        if len(points) > 0 and name is not None:
+            raise ValueError(
+                "When more than one point is provided, expected `name` to be None"
+            )
+        if radius is None:
+            raise ValueError("radius is required")
+        for point in points:
+            self.children.append(Point(point, radius=radius, name=name, color=color))
+        return self
+
     def write(self, filename):
         """
         Write a COLLADA file for this scene.

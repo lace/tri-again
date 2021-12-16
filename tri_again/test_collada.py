@@ -28,6 +28,12 @@ def test_example():
         .add_points(
             np.array([0.0, 0.0, 0.6]), np.array([5.0, 0.0, 0.2]), color="SeaGreen"
         )
+        .add_points_as_spheres(
+            np.array([0.0, 0.0, 0.9]),
+            np.array([5.0, 0.0, 0.3]),
+            radius=0.1,
+            color="blue",
+        )
     )
     scene.write("example.dae")
 
