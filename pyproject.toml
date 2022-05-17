@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tri-again"
-version = "1.1.1"
+version = "1.1.2"
 description = "Scenegraph for quickly debugging 3D meshes, polylines, and points"
 authors = ["Paul Melnikow <github@paulmelnikow.com>", "Metabolize"]
 license = "MIT"
@@ -26,7 +26,7 @@ classifiers = [
 # https://github.com/lace/tri-again/issues/25
 python = ">=3.7,<3.9"
 numpy = "*"
-polliwog = ">=2.0.0,<3"
+polliwog = ">=2.0.0,<=3.0.0"
 pycollada = ">=0.7.1,<0.8"
 toolz = ">=0.10.0,<0.12.0"
 vg = ">=2.0.0"
