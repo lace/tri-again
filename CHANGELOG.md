@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.2
+
+- Support polliwog 3.0.0 prereleases.
+
+
 ## 1.1.1
 
 - Support polylines with noncontiguous vertex arrays.
