@@ -26,7 +26,7 @@ classifiers = [
 # https://github.com/lace/tri-again/issues/25
 python = ">=3.7,<4"
 numpy = "*"
-polliwog = ">=2.0.0"
+polliwog = ">=2.0.0,<=3.0.0"
 pycollada = ">=0.7.1"
 toolz = ">=0.10.0,<0.12.0"
 vg = ">=2.0.0"
