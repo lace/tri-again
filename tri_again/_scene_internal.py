@@ -21,10 +21,11 @@ class Line(Object):
 
 
 class Point(Object):
-    def __init__(self, point, color, name=None):
+    def __init__(self, point, color, radius=None, name=None):
         # Validate.
         normalize_color(color)
 
         self.point = point
         self.name = name
+        self.radius = radius
         self.color = color

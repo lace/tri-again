@@ -13,6 +13,7 @@ from ._scene_internal import (
     Mesh as InternalMesh,
     Point as InternalPoint,
 )
+from ._shapes import sphere
 
 
 def create_material(collada, name, color=(1, 1, 1)):
@@ -144,9 +145,21 @@ def collada_from_scene(scene, name="triagain"):
                     [
                         child
                         for child in scene.children
-                        if isinstance(child, InternalPoint)
+                        if isinstance(child, InternalPoint) and child.radius is None
                     ],
                 ).items()
+            )
+        ]
+        + [
+            geometry_node_from_mesh(
+                collada=collada,
+                mesh=sphere(radius=child.radius, center=child.point),
+                name=f"point_as_sphere_{i}",
+            )
+            for i, child in enumerate(
+                child
+                for child in scene.children
+                if isinstance(child, InternalPoint) and child.radius is not None
             )
         ]
     )
