@@ -26,7 +26,7 @@ classifiers = [
 # https://github.com/lace/tri-again/issues/25
 python = ">=3.7,<4"
 numpy = "*"
-polliwog = ">=2.0.0,<=3.0.0"
+polliwog = {version = ">=2.0.0", allow-prereleases = true}
 pycollada = ">=0.7.1"
 toolz = ">=0.10.0,<0.12.0"
 vg = ">=2.0.0"
@@ -39,7 +39,7 @@ coverage = "5.5"
 executor = "23.2"
 flake8 = "3.9.2"
 flake8-import-order = "0.18.1"
-lacecore = "2.0.0"
+lacecore = "3.0.0a1"
 myst-parser = "0.15.1"
 pytest = "7.2.0"
 pytest-cov = "2.12.1"

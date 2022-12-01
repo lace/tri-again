@@ -34,9 +34,9 @@ def test_example():
 
 def test_noncontiguous_polyline_vertices():
     polyline = Polyline(
-        np.flipud(np.array([[5.5, 0.5, 0.0], [5.5, 0.75, 0.0], [5.5, 0.5, -0.5]])),
-        is_closed=True,
+        np.array([[5.5, 0.5, 0.0], [5.5, 0.75, 0.0], [5.5, 0.5, -0.5]]), is_closed=True
     )
+    polyline.v = np.flipud(polyline.v)
 
     # Confidence check.
     assert polyline.v.flags["C_CONTIGUOUS"] is False
