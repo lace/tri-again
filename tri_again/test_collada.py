@@ -32,20 +32,6 @@ def test_example():
     scene.write("example.dae")
 
 
-def test_noncontiguous_polyline_vertices():
-    polyline = Polyline(
-        np.array([[5.5, 0.5, 0.0], [5.5, 0.75, 0.0], [5.5, 0.5, -0.5]]), is_closed=True
-    )
-    polyline.v = np.flipud(polyline.v)
-
-    # Confidence check.
-    assert polyline.v.flags["C_CONTIGUOUS"] is False
-
-    # Act.
-    scene = Scene(point_radius=0.1).add_lines(polyline)
-    scene.write("other_example.dae")
-
-
 def test_error():
     with pytest.raises(ValueError, match="Expected a Polyline"):
         Scene().add_lines("not-a-polyline").write("other.dae")
