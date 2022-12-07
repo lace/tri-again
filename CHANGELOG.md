@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.0a0
+
+- Support Python 3.9
+- Require polliwog >= 3.0.0a0
+
+
 ## 1.1.2
 
 - Support polliwog 3.0.0 prereleases.
