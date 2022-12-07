@@ -1,9 +1,9 @@
 # Changelog
 
-## 1.2.0
+## 2.0.0a0
 
-- Allow any version of numpy
-- Test in Python 3.9
+- Support Python 3.9
+- Require polliwog>=3.0.0a0 and lacecore = "3.0.0a1
 
 
 ## 1.1.2
