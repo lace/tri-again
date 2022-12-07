@@ -1,12 +1,13 @@
 {
-    "python.linting.flake8Enabled": true,
-    "python.linting.enabled": true,
-    "python.testing.pytestArgs": [
-        "tri_again"
-    ],
-    "python.testing.unittestEnabled": false,
-    "python.testing.nosetestsEnabled": false,
-    "python.testing.pytestEnabled": true,
-    "python.formatting.provider": "black",
-    "python.pythonPath": ".venv/bin/python"
+  "python.linting.flake8Enabled": true,
+  "python.linting.enabled": true,
+  "python.testing.pytestArgs": ["tri_again"],
+  "python.testing.unittestEnabled": false,
+  "python.testing.nosetestsEnabled": false,
+  "python.testing.pytestEnabled": true,
+  "python.formatting.provider": "black",
+  "python.pythonPath": ".venv/bin/python",
+  "[markdown]": {
+    "editor.formatOnSave": false
+  }
 }

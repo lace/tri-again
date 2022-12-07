@@ -3,7 +3,7 @@
 ## 2.0.0a0
 
 - Support Python 3.9
-- Require polliwog >= 3.0.0a0 and lacecore == 3.0.0a1
+- Require polliwog >= 3.0.0a0
 
 
 ## 1.1.2
